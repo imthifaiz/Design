@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>imthi page</title>
+<script>
+
+function forvalidate(){
+	var final_email = document.form.email.value;
+	var final_password = document.form.password.value;
+	if(final_email== "" ){
+		alert("please enter your userId first.");
+		return false;
+	}else if(final_email!= "imti" ){
+		alert("invalid UserId!!!.");
+		return false;
+	}
+
+	if(final_password== "" ){
+		alert("please enter your Password.");
+		return false;
+	}else if(final_password!= "imti" ){
+		alert("invalid Password!!!.");
+		return false;
+	}
+	if(final_email == "imti" && final_password == "imti" ){
+		alert("login successful");
+		window.open('produdt_bill.html');
+	}
+}
+
+</script>
+<style>
+  body {
+  margin: 0;
+  padding: 0;
+  background: #e4d6d6;
+  font-size: 16px;
+  color: #222;
+  font-family: 'Lucida Calligraphy', sans-serif;
+  font-weight: 300;
+}
+input{
+    font-family: 'Splash';
+}
+p{
+	 font-family: 'Harlow Solid', sans-serif;
+}
+h1{
+	 font-family: 'Moonbeam', sans-serif;
+}
+
+
+h3{
+	text-align :center;
+	font-size:24px;
+	 font-family: 'Nasalization', sans-serif;
+}
+
+#login-box {
+  position: relative;
+  margin: 5% auto;
+  width: 600px;
+  height: 500px;
+  background: #FFF;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 300px;
+  height: 400px;
+}
+
+h1 {
+  margin: 0 0 20px 0;
+  font-weight: 300;
+  font-size: 28px;
+}
+
+input[type="text"] {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 220px;
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Garamond', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+input[type="text"]:focus {
+  border-bottom: 2px solid #16a085;
+  color: #16a085;
+  transition: 0.2s ease;
+}
+
+input[type="submit"] {
+  margin-top: 28px;
+  width: 120px;
+  height: 32px;
+  background: #16a085;
+  border: none;
+  border-radius: 2px;
+  color: #FFF;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  opacity: 0.8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: 0.1s ease;
+}
+
+input[type="submit"]:active {
+  opacity: 1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  transition: 0.1s ease;
+}
+</style>
+</head>
+<body>
+	<h3>....welcome to POS....</h3>
+<div id="login-box">
+  <div class="center">
+  
+    <h1>FORM</h1>
+    <h2 id="own_name"> InCharge: <input disabled="text" name = "own_name"  value="     IMTIZIAF"></h2>
+    <form class="login_form" method="post" name="form">
+      <label>UserId<span style="color:red">*</span></label>
+      <input type="text" name="email" id="email" value=""/>
+      <label>Password<span style="color:red">*</span></label>
+      <input type="password" name="password"  id="password" value=""/>
+      <p><span style="color:red">*</span>field is required</p>
+      <input type="submit" name="submit_value" value="submit" onclick="forvalidate()"/>
+    </form>
+  </div>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,503 @@
+<html>
+<head>
+<title>DATA TABLES FORM</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--js bootstrap source code-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <!--css bootstrap source code-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--css-->
+<style>
+    .tables{
+    position: relative;
+    margin: 5% auto;
+    width: 1200px;
+    height: auto;
+    background: #e1e1e1;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .tables1{
+    position: relative;
+    margin: 5% auto;
+    width: 1200px;
+    height: auto;
+    background: #b4b4b4;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    label,input {
+    display: block;
+    float: left;
+    border-radius: 20px;
+    border-color: black;
+   }
+   
+   label {
+    text-align: right;
+    font-weight: 900;
+    width: 110px;
+    position: relative;
+    right: 10px;
+   }
+
+   .col-sm-2{
+    padding: 10px;
+    display: flex;
+    position: relative;
+    left: 70%;
+   }
+
+.form-control1{
+    top: 190px;
+    position: relative;
+    right: 640px;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-control2{
+    top: 190px;
+    position: relative;
+    right: 650px;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#orderno{
+    right: 300px;
+    top: 205px;
+}
+
+#ordernos{
+    position: relative;
+    right: 180px;
+    top: 172px;
+    background-color: transparent;
+    width: 100px;
+}
+
+</style>
+    <!--script function for the table-->
+<script>
+$(document).ready(function() {
+    $(".data-table tbody").on('click','.remove',function(){
+	    $(this).parent().parent().remove();
+        calculate(this);
+	});
+} );
+
+function changeitems(obj){
+    
+    var item = $(obj).closest('tr').find('select[name=prd]').val();
+    var Name = $(obj).closest('body').find('select[name=custo]').val();
+    var price;
+    var qty = 1;
+    var Tamt;
+    if(item == 'soap'){
+        if(Name=='imthi'){
+            price = '33';
+        }else if(Name=='ashik'){
+            price = '32';
+        }else if(Name=='shaheel'){
+            price = '30';
+        }else{
+            price = '35';
+        }
+         
+    }else if(item == 'powder'){
+        if(Name=='imthi'){
+            price = '19';
+        }else if(Name=='ashik'){
+            price = '18';
+        }else if(Name=='shaheel'){
+            price = '17';
+        }else{
+            price = '20';
+        } 
+    }else if(item == 'shampoo'){
+        if(Name=='imthi'){
+            price = '14';
+        }else if(Name=='ashik'){
+            price = '13';
+        }else if(Name=='shaheel'){
+            price = '12';
+        }else{
+            price = '15';
+        } 
+    }else if(item == 'paste'){
+        if(Name=='imthi'){
+            price = '9';
+        }else if(Name=='ashik'){
+            price = '8';
+        }else if(Name=='shaheel'){
+            price = '7';
+        }else{
+            price = '10';
+        } 
+    }
+    
+    qty = document.form.qty.value = qty;
+    var cost = document.form.cost.value = price;
+    Tamt = qty * cost;
+    Tamt = document.form.amount.value = Tamt;
+    
+    var qtys = $(obj).closest('tr').find('input[name=qty]').val(qty);
+    var costs = $(obj).closest('tr').find('input[name=cost]').val(price);
+    var Tamts = $(obj).closest('tr').find('input[name=amount]').val(Tamt);
+
+    var Subtot = document.form.subtotal.value; 
+    document.form.subtotal.value = '';
+    if(Subtot==''){
+        document.form.subtotal.value = Tamt;
+    }else{
+        var finto = parseFloat(Subtot) + parseFloat(Tamt);
+        var Subtot = document.form.subtotal.value = finto;
+    }
+
+    var Total = document.form.total.value; 
+    if(Total==''){
+        document.form.total.value = Tamt;
+    }else{
+        var totamt = parseFloat(Subtot);
+        var Subtot = document.form.total.value = totamt;
+    }
+}
+
+function calculate(obj){
+    var Ramt = $(obj).closest('tr').find('input[name=amount]').val();
+    var Samt= document.form.subtotal.value;
+    var Famt;
+    Famt = parseFloat(Samt)-parseFloat(Ramt);
+    document.form.subtotal.value= Famt;
+    document.form.total.value= Famt;
+    if(Ramt=="" && Samt!=""){
+        document.form.subtotal.value= Samt;
+        document.form.total.value= Samt;
+    }else if(Ramt=="" && Samt==""){
+        document.form.subtotal.value= '';
+        document.form.total.value= '';
+    }else if(Ramt!="" && Samt==""){
+        document.form.subtotal.value= '';
+        document.form.total.value= '';
+    }
+    document.form.tax.value="";
+    document.form.disc.value="";
+    document.getElementById("checkbox").checked = true;
+    document.getElementById("checkbox").checked = false;
+    
+}
+
+function changeqty(obj){
+    var qty = document.form.qty.value;
+    var price = document.form.cost.value;
+    var Samnt = document.form.subtotal.value;
+    var Famnt = document.form.total.value;
+    var Tamt = qty * price;
+    document.form.amount.value = Tamt;
+    
+    var qtys = $(obj).closest('tr').find('input[name=qty]').val();
+    var prices = $(obj).closest('tr').find('input[name=cost]').val();
+    var Tamts = qtys * prices;
+    var Finto = parseFloat(Samnt) + parseFloat(prices);
+    document.form.subtotal.value = Finto;
+    document.form.total.value = Finto;
+    
+    Tamts = $(obj).closest('tr').find('input[name=amount]').val(Tamts);
+}
+
+function taxamnt(){
+    var sub = document.form.subtotal.value;
+    var tax = document.form.tax.value;
+    var fintax = ((parseFloat(sub)*tax)/100)
+    document.form.tax.value = fintax;
+    var tot = parseFloat(fintax) + parseFloat(sub);
+    document.form.total.value = tot;
+}
+
+function submitclr(){
+    document.getElementById("form").reset(); 
+    document.getElementById("custo").value = "";
+
+    var Order = document.getElementById('orderhid').value;
+    document.getElementById('ordernos').value = Order;
+    var lastDigit = String(Order).slice(-2);
+
+    var Order = parseInt(document.getElementById('orderhid').value);
+    Order = isNaN(lastDigit) ? 0 : lastDigit;
+    Order++;
+    document.getElementById('orderhid').value = "PO10" + Order;
+}
+
+function clrall(){
+    document.getElementById("prd").value = "";
+    document.getElementById("qty").value = "";
+    document.getElementById("cost").value = "";
+    document.getElementById("amount").value = "";
+    document.getElementById("custo").value = "";
+    document.form.subtotal.value = '';
+    document.form.tax.value = '';
+    document.form.disc.value = '';
+    document.form.total.value = '';
+    document.form.totalsgd.value = '';
+    document.form.totalaed.value = '';
+    document.getElementById("checkbox").checked = true;
+    document.getElementById("checkbox").checked = false;
+}
+
+function discal(obj){
+    var dis = document.form.disc.value;
+    var ch =  document.form.dis.value;
+    var sub = document.form.subtotal.value;
+    var tax = document.form.tax.value;
+    if(ch==''){
+        if(dis !=''){
+        chk('not');
+        }
+    }else{
+        chk(ch)
+    }
+}
+
+function chk(obj){
+    var sub = document.form.subtotal.value;
+    var tax = document.form.tax.value;
+    if(tax==''){
+        tax = '0';
+    }
+    var dis = document.form.disc.value;
+    var disval;
+    if(obj=='not'){
+        alert('please select % or $');
+        document.form.disc.value = '';
+    }else if(obj=='per') {
+      disval = (parseFloat(sub)+parseFloat(tax));
+      disval = disval * parseFloat(dis)/100;
+        if(dis!=''){
+            var tot = document.form.total.value;
+            tot = parseFloat(tot)-parseFloat(disval);
+            document.form.total.value = parseFloat(tot).toFixed(2);
+        }
+    }else if(obj=='cur'){
+        disval= (parseFloat(sub)+parseFloat(tax));
+        disval = disval -parseFloat(dis);
+        if(dis!=''){
+            document.form.total.value = disval.toFixed(2);
+        }
+    }
+}
+
+function curz(){
+    var hidesgd = document.getElementById("sgd");
+    var hidesgd1 = document.getElementById("totalsgd");
+
+    var hideaed = document.getElementById("aed");
+    var hideaed1 = document.getElementById("totalaed");
+
+    var sub = document.form.subtotal.value;
+    var curchange = document.form.curren.value;
+    if(curchange=='inr'){
+        hidesgd.style.display = "none";
+        hidesgd1.style.display = "none";
+
+        hideaed.style.display = "none";
+        hideaed1.style.display = "none";
+        
+    }else if(curchange=='sgd'){
+        hideaed.style.display = "none";
+        hideaed1.style.display = "none";
+
+        hidesgd.style.display = "block";
+        hidesgd1.style.display = "block";
+
+        var sgd = '61.72';
+        var Cursgd = parseFloat(sgd) * parseFloat(sub);
+        document.form.totalsgd.value = Cursgd.toFixed(2);
+        if(sub==''){
+            document.form.totalsgd.value = '';
+        }
+    }else if(curchange=='aed'){
+        hideaed.style.display = "block";
+        hideaed1.style.display = "block";
+
+        hidesgd.style.display = "none";
+        hidesgd1.style.display = "none";
+
+        var aed = '22.18';
+        var Cursgd = parseFloat(aed) * parseFloat(sub);
+        document.form.totalaed.value = Cursgd.toFixed(2);
+        if(sub==''){
+            document.form.totalaed.value = '';
+        }
+    }
+}
+
+function addRow(){
+    var body="";
+    body += '<tr>';
+
+    body += '<td>';
+    body += '<select name="prd" id="prd" class="form-control" onchange="changeitems(this)" >';
+        body += '  <option disabled selected value="">Select an Item</option> ';
+        body += '<option value="soap">SOAP</option> ';
+        body += '<option value="powder">POWDER</option>';
+        body += '<option value="shampoo">SHAMPOO</option> ';
+        body += '<option value="paste">PASTE</option>';
+    body += '</select>';
+    body += '</td>';
+
+    body += '<td>';
+        body += '<input type="number" name="qty" class="form-control" placeholder="Enter Qty" value ="" onchange="changeqty(this)" >';
+    body += '</td>';
+
+    body += '<td>';
+        body += '<input type="number" name="cost" class="form-control" readonly value ="">';
+    body += '</td>';
+
+    body += '<td>';
+        body += '<input type="number" name="amount" class="form-control" readonly value ="">';
+    body += '</td>';
+
+    body += '<td>';
+        body += '<input type="button" name="remove" class="form-control remove"  value ="Remove" onclick="remove(this)">';
+    body += '</td>';
+
+    body += '</tr>';
+    $(".data-table tbody").append(body);	
+}
+
+</script>
+</head>
+<body>  
+      <div class="row">
+        <div class="col-sm-3" style="display: flex; left: 75px; top: 10px;" >
+            <label name="cust" id="cust" style="width: 170px; display: flex; align-items: center; justify-content: center;">Customer Name:</label>
+            <select name="custo" id="custo" class="form-control" style="width: 180px;" onchange="custName(this)">
+                <option disabled selected value="">Select Customer</option>
+                <option value="imthi">Imthiyas</option>
+                <option value="ashik">Ashik</option>
+                <option value="shaheel">Shaheel</option>
+            </select>
+        </div>
+      </div>
+    <!--include the html file-->
+<div class="tables">
+    <form class="login_form" method="post" name="form" id="form">
+<table id="dataentry" class="table table-striped table-bordered data-table" style="width:100%">
+<thead>
+<tr>
+<th>Product</th>
+<th>Qty</th>
+<th>Price</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+    <select name="prd" id="prd" class="form-control" onchange="changeitems(this)">
+        <option disabled selected value="">Select an Item</option>
+        <option value="soap">SOAP</option>
+        <option value="powder">POWDER</option>
+        <option value="shampoo">SHAMPOO</option>
+        <option value="paste">PASTE</option>
+    </select>
+</td>
+
+<td align="center">
+    <input type="number" name="qty" id="qty" class="form-control" placeholder="Enter Qty" value ="" onchange="changeqty(this)" >
+</td>
+
+<td align="center">
+    <input type="number" name="cost" id="cost" class="form-control" readonly value ="">
+</td>
+
+<td align="center">
+    <input type="number" name="amount" id="amount" class="form-control" readonly  value ="">
+</td>
+</tr>
+    </tbody>
+    
+    </table>
+
+    <div class="col-sm-6">
+        <a class="add-line" style="text-decoration: none; cursor: pointer;" onclick="addRow()">+ Add another line</a>
+    </div>
+<div class="tables1">
+    <div class="col-sm-6" style="display: flex; top: 30px;" >
+        <label name="currency" id="currency" style="width: 150px; display: flex; align-items: center; justify-content: center; bottom: 8px;">Select Currency:</label>
+        <select name="curren" id="curren" class="form-control" style="width: 80px; " onchange="curz()" >
+            <option value="inr">INR</option>
+            <option value="sgd">SGD</option>
+            <option value="aed">AED</option>
+        </select>
+        <div class="col-sm-2">
+            <input type="button" name="" id="" value="Submit" class="form-control1" onclick="submitclr()">
+        </div>
+        <div class="col-sm-2">
+            <input type="button" name="" id="" value="Reset" class="form-control2 clr" onclick="clrall()">
+        </div>
+        <div class="col-sm-3">
+            <label name="orderno" id="orderno">Order No:</label>
+            <input type="text" name="ordernos" id="ordernos" readonly style="text-align: center; font-weight: 700;" value="PO100">
+            <input type="hidden" name="orderhid" id="orderhid" readonly value="PO101">
+        </div>
+    </div>  
+<div class="col-sm-2">
+        <label name="subtotal" id="subtotal">Sub Total : </label>
+        <input type="text" style="background-color: transparent; width :75px; text-align: center; position: relative; left: 30px;" readonly name="subtotal" id="subtotal">
+    </div>
+
+<div class="col-sm-2">
+        <label for="tax" id="tax">Tax %: </label>
+        <input type="text" style="background-color: transparent; width :75px; text-align: center; position: relative; left: 30px;" name="tax" id="tax" onchange="taxamnt()" value="">
+    </div>
+
+<div class="col-sm-2">
+        <label name="discount" id="discount" style="position: relative; right: 40px;">Discount</label>
+        <input type="radio" name="dis" value="per" id="checkbox" onchange="chk('per')" style="position: relative; right: 35px; bottom: 3px;"><label style="position: relative; right: 34px;">%</label>
+        <input type="radio" name="dis" value="cur" id="checkbox" onchange="chk('cur')" style="position: relative; right: 30px; bottom: 3px;"><label style="position: relative; right: 30px;">$:</label>
+        <input type="text" style="background-color: transparent; width :75px; text-align: center; position: relative; left: 12px;" name="disc" id="disc" value="" onchange="discal(this)">
+    </div>
+
+<div class="col-sm-2">
+        <label for="tamnt" id="tamnt">Total[INR] : </label>
+        <input type="text" style="background-color: transparent; width :75px; text-align: center; position: relative; left: 30px;" name="total" id="total" readonly>
+    </div>
+<div class="col-sm-2">
+        <label for="sgd" id="sgd" style="display: none;">Total[SGD] : </label>
+        <input type="text" style="background-color: transparent; width :75px; text-align: center; display: none; position: relative; left: 30px;" name="totalsgd" id="totalsgd" readonly>
+        <label for="aed" id="aed" style="display: none;">Total[AED] : </label>
+        <input type="text" style="background-color: transparent; width :75px; text-align: center; display: none; position: relative; left: 30px;" name="totalaed" id="totalaed" readonly>
+    </div>
+</div> 
+</form>
+        </div>
+    </body>
+</html>
