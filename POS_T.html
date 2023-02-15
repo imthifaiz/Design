@@ -1,0 +1,496 @@
+<html>
+<head>
+<title>DATA TABLES FORM</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--js bootstrap source code-->
+<script src="C:\Users\Imti_ziaf\Documents\login\src\js\srcipt1.js"></script>
+<script src="C:\Users\Imti_ziaf\Documents\login\src\js\srcipt2.js"></script>
+<script src="C:\Users\Imti_ziaf\Documents\login\src\js\srcipt3.js"></script>
+<script src="C:\Users\Imti_ziaf\Documents\login\src\js\srcipt4.js"></script>
+<script src="C:\Users\Imti_ziaf\Documents\login\src\js\srcipt5.js"></script>
+    <!--css bootstrap source code-->
+<link rel="stylesheet" href="C:\Users\Imti_ziaf\Documents\login\src\css\style1.css">
+<link rel="stylesheet" href="C:\Users\Imti_ziaf\Documents\login\src\css\style2.css">
+<link rel="stylesheet" href="C:\Users\Imti_ziaf\Documents\login\src\css\style3.css">
+<link rel="stylesheet" href="C:\Users\Imti_ziaf\Documents\login\src\css\style4.css">
+<link rel="stylesheet" href="C:\Users\Imti_ziaf\Documents\login\src\css\style5.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+<!--css-->
+<style>
+    .tables{
+        position: relative;
+        margin: 5% auto;
+        width: 1200px;
+        height: auto;
+        background: #e1e1e1;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    /* .tablesss{
+        text-align: left;
+        position: relative;
+        margin: 0% auto; 
+        width: 530px;
+        height: 155px;
+        background: #d7d0df;
+        border-radius: 25px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
+        float: right;
+        padding: 5px;
+        display: -webkit-inline-box;
+    } */
+    .tablesss{
+        text-align: left;
+        position: relative;
+        margin: 0% auto; 
+        background: #d7d0df;
+        border-radius: 40px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
+        padding: 22px;
+        display: -webkit-inline-box;
+
+        /* text-align: left;
+        position: relative;
+        margin: 0% auto; 
+        width: 530px;
+        height: 155px; */
+        /* background: #d7d0df; */
+        /* border-radius: 25px; */
+        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
+        float: right;
+        padding: 5px; */
+        /* display: -webkit-inline-box; */
+    }
+    .tablerow{
+        /* text-align: left;
+        position: relative;
+        margin: 0% auto; 
+        width: 530px;
+        height: 155px; */
+        border-radius: 25px;
+        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
+        float: right;
+        padding: 5px; */
+        display: -webkit-inline-box;
+    }
+    .box{
+        float: left;
+    }
+
+
+    @media print {
+        /* #print.tablerow { */
+      #print {
+        width: 100%;
+        margin: 0 auto;
+        height: 800px;
+        border: 1px solid rgb(15, 13, 13);
+        border-radius: 25px;
+        bottom: -90px;
+        padding: 20px;
+        box-sizing: border-box;
+        page-break-after: always;
+      }
+    }
+</style>
+
+<!--script function for the table-->
+<script>
+$(document).ready(function() {
+
+    $(".data-table tbody").on('click','.remove-action',function(){
+	    $(this).parent().parent().remove();
+	    calculateTotal(this);
+	});
+} );
+
+function calculateTotal(obj){
+ var Ramt = $(obj).closest('tr').find('input[name=amount]').val();
+ var Samt= document.form.Subtot.value;
+ var Famt;
+ Famt = parseFloat(Samt)-parseFloat(Ramt);
+ document.form.Subtot.value= Famt;
+ document.form.Totamt.value= Famt;
+ var Taxamt= document.form.Tax1.value;
+ if(Taxamt!=''){
+    taxcals(Taxamt);
+ }
+ var dis= document.form.Discount.value;
+ if(dis!=''){
+    discal(Famt);
+ }
+//  var Amount = parseFloat(Samt).toFixed(2);
+}
+
+function isNumberKey(evt, element, id) {
+	  var charCode = (evt.which) ? evt.which : event.keyCode;
+	  if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8 || charCode == 45))
+		  {
+	    	return false;
+		  }
+	        return true;
+	}
+
+function changeitems(obj){
+    var item = $(obj).closest('tr').find('select[name=prd]').val();
+    var price;
+    var qty = 1;
+    var Tamt;
+    if(item == 'soap'){
+        price = '35'; 
+    }else if(item == 'powder'){
+        price = '20'; 
+    }else if(item == 'shampoo'){
+        price = '15'; 
+    }else if(item == 'paste'){
+        price = '10'; 
+    }
+
+    qty = document.form.qty.value = qty;
+    var cost = document.form.cost.value = price;
+    Tamt = qty * cost;
+    Tamt = document.form.amount.value = Tamt;
+    var qtys = $(obj).closest('tr').find('input[name=qty]').val(qty);
+    var costs = $(obj).closest('tr').find('input[name=cost]').val(price);
+    var Tamts = $(obj).closest('tr').find('input[name=amount]').val(Tamt);
+
+    var Subtot = document.form.Subtot.value;
+    document.form.Subtot.value='';
+    if(Subtot==''){
+    var Subtot = document.form.Subtot.value = Tamt;
+    }else{
+        var asmt =parseFloat(Subtot)+parseFloat(Tamt);
+        var Subtot = document.form.Subtot.value = asmt;
+    }
+
+    var totamt = document.form.Totamt.value;
+    if(totamt==''){
+    var Subtot = document.form.Totamt.value = Tamt;
+    }else{
+        var asmt =parseFloat(Subtot);
+        var Subtot = document.form.Totamt.value = asmt;
+    }
+    
+    var taxamt = document.form.Tax.value; // tax calculation
+    var taxamt1 = document.form.Tax1.value; // given tax
+    if(taxamt1==''){
+        if (isNaN(taxamt1)) {
+            taxcals(taxamt1);
+        } else {
+        
+        }
+    }else{
+        if (!isNaN(taxamt1)) {
+            taxcals(taxamt1);
+        } else {
+        
+        }
+    }
+    var kk = document.form.Subtot.value
+    //displayAmountInWords(kk);
+
+    var dis= document.form.Discount.value;
+    if(dis!=''){
+        discal(asmt);
+    }
+    
+}
+
+function changeqty(obj){
+    var qty = document.form.qty.value;
+    var price = document.form.cost.value;
+    var Samt= document.form.Subtot.value;
+    var Famt= document.form.Totamt.value;
+    var Tamt = qty * price;
+    document.form.amount.value = Tamt;
+    //var Subtot = document.form.Subtot.value = Tamt;
+
+    var qtys = $(obj).closest('tr').find('input[name=qty]').val();
+    var prices = $(obj).closest('tr').find('input[name=cost]').val();
+    var Tamts = qtys * prices;
+    var asmt =(parseFloat(Samt)+parseFloat(prices));
+    var alsmt =(parseFloat(Famt)+parseFloat(prices));
+
+    //var asmt =parseFloat(Samt)+parseFloat(Tamts)-parseFloat(prices);
+    document.form.Totamt.value = alsmt;
+    if (!isNaN(asmt)) {
+        var Subtots = document.form.Subtot.value = asmt;
+    } else {
+        console.log('The value is not a number');
+    }    
+    Tamts = $(obj).closest('tr').find('input[name=amount]').val(Tamts);
+
+    var taxamt = document.form.Tax.value; // tax calculation
+    var taxamt1 = document.form.Tax1.value; // given tax
+    if(taxamt1==''){
+        if (isNaN(taxamt1)) {
+            taxcals(taxamt1);
+        } else {
+        
+        }
+    }else{
+        if (!isNaN(taxamt1)) {
+            taxcals(taxamt1);
+        } else {
+        
+        }
+    }
+    //displayAmountInWords(alsmt);
+    var dis= document.form.Discount.value;
+    if(dis!=''){
+        discal(asmt);
+    }
+    
+}
+
+function displayAmountInWords(amount) {
+  const amountString = amount.toString();
+  const digits = amountString.split('');
+  const words = digits.map(function(digit) {
+    switch (digit) {
+      case '0':
+        return 'zero';
+      case '1':
+        return 'one';
+      case '2':
+        return 'two';
+      case '3':
+        return 'three';
+      case '4':
+        return 'four';
+      case '5':
+        return 'five';
+      case '6':
+        return 'six';
+      case '7':
+        return 'seven';
+      case '8':
+        return 'eight';
+      case '9':
+        return 'nine';
+      default:
+        return '';
+    }
+  });
+  const amountInWords = words.join(' ');
+  document.form.amtinwrds.value = amountInWords;
+  console.log(amountInWords);
+}
+
+function taxcals(obj){
+    //alert(obj);
+    var Samt= document.form.Subtot.value;
+    var tax = obj;
+    if(Samt!=''){
+        var taxcal = ((parseFloat(Samt)*parseFloat(tax))/100);
+        document.getElementById('taxid').innerHTML = "TAX["+tax+"%]:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        var label = document.getElementById('taxid');
+        document.form.Tax.value = taxcal;
+        label.style.color = 'green';
+        var ToTamt = (parseFloat(Samt)+parseFloat(taxcal));
+        document.form.Totamt.value = ToTamt;
+    }else{
+        alert('Choose Item To proceed Tax!!!')
+        document.form.Tax.value = '';
+        document.getElementById("prd").focus();
+    }
+}
+
+function taxcal(obj){
+    var Samt= document.form.Subtot.value;
+    if(Samt!=''){
+        var tax = document.form.Tax.value;
+        var tax1 = document.form.Tax1.value = tax;
+        var taxcal = ((parseFloat(Samt)*parseFloat(tax))/100);
+        //document.getElementById('taxid').innerHTML = "TAX-[%]: " + tax;
+        document.getElementById('taxid').innerHTML = "TAX["+tax+"%]:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        var label = document.getElementById('taxid');
+        document.form.Tax.value = taxcal;
+        label.style.color = 'green';
+        var ToTamt = (parseFloat(Samt)+parseFloat(taxcal));
+        document.form.Totamt.value = ToTamt;
+    }else{
+        alert('Choose Item To proceed Tax!!!')
+        document.form.Tax.value = '';
+        document.getElementById("prd").focus();
+    }
+}
+
+function discal(obj){
+    var dis = document.form.Discount.value;
+    var ch =  document.form.dis.value;
+    var sub = document.form.Subtot.value;
+    var tax = document.form.Tax.value;
+    if(ch==''){
+        if(dis !=''){
+        chk('not');
+        }
+    }else{
+        chk(ch)
+    }
+
+}
+
+function chk(obj){
+    var sub = document.form.Subtot.value;
+    var tax = document.form.Tax.value;
+    if(tax==''){
+        tax = '0';
+    }
+    var dis = document.form.Discount.value;
+    var disval;
+    if(obj=='not'){
+        alert('please select % or $');
+        document.form.Discount.value = '';
+    }else if(obj=='per') {
+      disval = (parseFloat(sub)+parseFloat(tax));
+      disval = disval * parseFloat(dis)/100;
+        if(dis!=''){
+            var tot = document.form.Totamt.value;
+            tot = parseFloat(tot)-parseFloat(disval);
+            //alert(tot);
+            //tot = parseFloat(tot)+parseFloat(dis);
+            //alert(tot);
+            // document.form.Totamt.value = tot;
+             document.form.Totamt.value = parseFloat(tot)+parseFloat(dis);
+             //document.getElementById('disid').innerHTML = "<b>DIS-["+disval+"]</b>";
+        }
+    }else if(obj=='cur'){
+        disval= (parseFloat(sub)+parseFloat(tax));
+        disval = disval -parseFloat(dis);
+        if(dis!=''){
+            document.form.Totamt.value = disval;
+        }
+    }
+}
+
+
+function addRow(){
+    var body="";
+    body += '<tr>';
+
+    body += '<td>';
+    body += '<select name="prd" id="prd" class="form-control" onchange="changeitems(this)" >';
+        body += '  <option disabled selected value="">Select an Item</option> ';
+        body += '<option value="soap">SOAP</option> ';
+        body += '<option value="powder">POWDER</option>';
+        body += '<option value="shampoo">SHAMPOO</option> ';
+        body += '<option value="paste">PASTE</option>';
+    body += '</select>';
+    body += '</td>';
+
+    body += '<td>';
+        body += '<input type="number" name="qty" class="form-control" placeholder="Enter Qty" value ="" onchange="changeqty(this)" >';
+    body += '</td>';
+
+    body += '<td>';
+        body += '<input type="number" name="cost" class="form-control" disabled value ="">';
+    body += '</td>';
+
+    body += '<td>';
+        body += '<input type="number" name="amount" class="form-control" disabled value ="">';
+    body += '</td>';
+
+    body += '<td class="" style="position:relative;">';
+	body += '<span class="fa fa-trash remove-action" aria-hidden="true"></span>';
+	body += '</td>';
+
+    body += '</tr>';
+    $(".data-table tbody").append(body);	
+}
+
+
+</script>
+</head>
+<body>    
+    <!--include the html file-->
+<div class="tables" id="print">
+    <form class="login_form" method="post" name="form">
+<table id="dataentry" class="table table-striped table-bordered data-table" style="width:100%">
+<thead>
+<tr>
+<th>Product</th>
+<th>Qty</th>
+<th>Price</th>
+<th>Total Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+    <select name="prd" id="prd" class="form-control" onchange="changeitems(this)">
+        <option disabled selected value="">Select an Item</option>
+        <option value="soap">SOAP</option>
+        <option value="powder">POWDER</option>
+        <option value="shampoo">SHAMPOO</option>
+        <option value="paste">PASTE</option>
+    </select>
+</td>
+
+<td align="center">
+    <input type="number" name="qty" class="form-control" placeholder="Enter Qty" value ="" onchange="changeqty(this)" >
+</td>
+
+<td align="center">
+    <input type="number" name="cost" class="form-control" value ="" disabled>
+</td>
+
+<td align="center" class="amounts">
+    <input type="number" name="amount" class="form-control" value ="" disabled>
+</td>
+</tr>
+    </tbody>
+    
+    </table>
+
+    <div class="col-sm-6">
+        <a class="add-line" style="text-decoration: none; cursor: pointer;" onclick="addRow()">+ Add another line</a>
+    </div>
+    <div class="form-group">
+        <div class="control-label col-form-label col-sm-8 tablerow">
+            <input type="hidden" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;/* position: fixed; */" value="" readonly="">
+            <input type="hidden" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;/* position: fixed; */" value="" readonly="">
+            <br><br><br><br>
+            <label style="font-weight: 700;color: black;">AMOUNT IN WORDS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" name="amtinwrds" id="amtinwrds" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;/* position: fixed; */" value="" readonly="">
+        </div>
+        <div class="tablesss">
+        <label style="font-weight: 700;color: black;">SUB TOTAL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" name="Subtot" id="Subtot" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;" value="" readonly=""><br>
+
+        <label style="font-weight: 700;color: black;" id="taxid">TAX[%]:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" name="Tax" id="Tax" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;" value="" placeholder="Enter Tax" onchange="taxcal(this)" onkeypress="return isNumberKey(event,this,4)"> <br>
+            <input type="hidden" name="Tax1" id="Tax1" value="">
+
+        <!-- <label style="font-weight: 700;color: black;" id="disId">Discount:           
+            <input type="checkbox" name="check" id="check" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;" value="" placeholder="Enter discount" onchange="chk('checked')" onkeypress="return isNumberKey(event,this,4)"> <br> 
+            <input type="radio" name="check" id="check" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;" value="ss" placeholder="Enter discount" onchange="chk('checked')" onkeypress="return isNumberKey(event,this,4)"> 
+            <input type="radio" name="check" id="check" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;" value="dd" placeholder="Enter discount" onchange="chk('checked')" onkeypress="return isNumberKey(event,this,4)"> <br>
+        </label> -->
+        <label class="radio-inline" id="disid"><b>Dis In[%]</b>
+            <input type="radio" name="dis" value="per" onchange="chk('per')"> 
+        </label>
+        <label class="radio-inline"><b>/</b> 
+            <input type="radio" name="dis" value="cur" onchange="chk('cur')"><b>In[$]</b>
+        </label>
+            <input type="text" name="Discount" id="Discount" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;" value="" onchange="discal(this)" placeholder="Enter discount" onkeypress="return isNumberKey(event,this,4)"> <br>
+
+        <label style="font-weight: 700;color: black;">TOTAL AMOUNT:&nbsp;&nbsp;</label>
+            <input type="text" name="TotAmt" id="Totamt" style="background: transparent;border: aliceblue;text-align: right;font-weight: bold;font-family: monospace;color: #8b4f22;" value="" readonly="">
+    
+            <div class="col-sm-6" style="padding: 35px;position: absolute;right: 524px;bottom: -30px;color: burlywood;">
+                <button onclick="window.print()" class="btn btn-success">Print Receipt</button>
+            </div>
+</div>
+    
+    </div>
+</form>
+
+
+        </div>
+    </body>
+</html>
+
+
