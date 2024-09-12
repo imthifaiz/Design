@@ -113,3 +113,9 @@ document.addEventListener('gesturestart', (event) => {
     event.preventDefault();
 }, { passive: false });
 
+
+document.addEventListener('touchstart', function(event) {
+    if (event.detail === 2) {
+        event.preventDefault(); // Prevent double-tap zoom
+    }
+}, { passive: false });
