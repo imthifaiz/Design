@@ -5,6 +5,7 @@ const scoreDisplay = document.getElementById('score');
 const leftButton = document.getElementById('left-button');
 const rightButton = document.getElementById('right-button');
 const backgroundMusic = document.getElementById('background-music');
+const gameOverMusic = document.getElementById('game-over-music');
 const startButton = document.getElementById('start-button');
 
 let score = 0;
@@ -90,26 +91,8 @@ function checkCollision() {
         goatRect.bottom > bikeRect.top) {
         clearInterval(gameInterval);
         backgroundMusic.pause(); // Stop background music
+        gameOverMusic.play();   // Play game-over music
         alert('Game Over! Anna kitta mattikita Your Score: ' + score);
         window.location.reload();
     }
 }
-
-// Prevent default behavior for double-click (zoom)
-document.addEventListener('dblclick', (event) => {
-    event.preventDefault();
-}, { passive: false });
-
-// Prevent default zooming behavior on touch devices
-document.addEventListener('touchstart', (event) => {
-    // Check if the touch is a pinch gesture
-    if (event.touches.length > 1) {
-        event.preventDefault();
-    }
-}, { passive: false });
-
-// Prevent default zooming behavior on pinch-to-zoom
-document.addEventListener('gesturestart', (event) => {
-    event.preventDefault();
-}, { passive: false });
-
