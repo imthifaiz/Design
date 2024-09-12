@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ImtiShafi Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-area">
+        <div class="road">
+            <div class="goat" id="goat">
+                <img src="./assets/goat.png" alt="">
+            </div>
+            <div class="object leaf" id="leaf">
+                <img src="./assets/leaf.png" alt="">
+            </div>
+            <div class="object bike" id="bike">
+                <img src="./assets/bike.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="score">Score: <span id="score">0</span></div>
+    <div class="controls">
+        <button id="left-button">&larr;</button>
+        <button id="right-button">&rarr;</button>
+    </div>
+
+    <!-- Background music -->
+    <audio id="background-music" src="./assets/background-music.mp3" loop></audio>
+    <!-- Game over music -->
+    <audio id="game-over-music" src="./assets/game-over-music.mp3"></audio>
+    
+    <button id="start-button">Start Game</button>
+
+    <script src="script.js"></script>
+</body>
+</html>

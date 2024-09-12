@@ -2,18 +2,44 @@ const goat = document.getElementById('goat');
 const leaf = document.getElementById('leaf');
 const bike = document.getElementById('bike');
 const scoreDisplay = document.getElementById('score');
+const leftButton = document.getElementById('left-button');
+const rightButton = document.getElementById('right-button');
+const backgroundMusic = document.getElementById('background-music');
+const gameOverMusic = document.getElementById('game-over-music');
+const startButton = document.getElementById('start-button');
+
 let score = 0;
 let goatPosition = 125; // Starting position of the goat
 let gameInterval;
 let gameSpeed = 5; // Speed of object movement
 
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft' && goatPosition > 0) {
+// Function to move the goat left or right
+function moveGoat(direction) {
+    if (direction === 'left' && goatPosition > 0) {
         goatPosition -= 20;
-    } else if (event.key === 'ArrowRight' && goatPosition < 250) {
+    } else if (direction === 'right' && goatPosition < 250) {
         goatPosition += 20;
     }
     goat.style.left = `${goatPosition}px`;
+}
+
+// Add event listeners for keyboard input
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+        moveGoat('left');
+    } else if (event.key === 'ArrowRight') {
+        moveGoat('right');
+    }
+});
+
+// Add event listeners for button clicks
+leftButton.addEventListener('click', () => moveGoat('left'));
+rightButton.addEventListener('click', () => moveGoat('right'));
+
+// Add event listener for start button
+startButton.addEventListener('click', () => {
+    backgroundMusic.play();
+    startGame();
 });
 
 function startGame() {
@@ -64,9 +90,13 @@ function checkCollision() {
         goatRect.top < bikeRect.bottom &&
         goatRect.bottom > bikeRect.top) {
         clearInterval(gameInterval);
-        alert('Game Over! Anna kitta mattikita Your Score: ' + score);
-        window.location.reload();
+        backgroundMusic.pause(); // Stop background music
+        gameOverMusic.play();   // Play game-over music
+
+        // Show alert after game-over music finishes
+        gameOverMusic.onended = () => {
+            alert('Game Over! Anna kitta mattikita Your Score: ' + score);
+            window.location.reload();
+        };
     }
 }
-
-startGame();
